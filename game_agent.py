@@ -43,10 +43,15 @@ def custom_score(game, player):
         return float('inf')
     elif game.is_loser(player):
         return float('-inf')
-
+    num_blanks = len(game.get_blank_spaces())
+    num_cells = game.height * game.width
     num_my_moves = len(game.get_legal_moves(player))
     num_opponents_moves = len(game.get_legal_moves(game.get_opponent(player)))
-    return (num_my_moves - num_opponents_moves) / (num_opponents_moves + 1.)
+    return (num_my_moves - num_opponents_moves) / (num_opponents_moves + 10. * num_blanks / num_cells)
+    #### other heuristics are listed below ####
+    # return (num_my_moves - 1.0 * num_opponents_moves) 
+    # return (num_my_moves - num_opponents_moves) / (num_opponents_moves + 0.1 * num_blanks / num_cells)
+    # return (num_my_moves - num_opponents_moves) / (num_opponents_moves + 3.)
 
 
 class CustomPlayer:
